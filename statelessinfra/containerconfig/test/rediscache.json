@@ -1,0 +1,38 @@
+{
+    "basicproperties": {
+        "container_name": "redis-cache",
+        "revision_mode": "Single",
+        "workload_profile_name": "Consumption"
+    },
+    "ingress": {
+        "allow_insecure_connections": false,
+        "external_enabled": false,
+        "target_port": 6379,
+        "transport": "tcp"
+    },
+    "configtemplate": {
+        "max_replicas": 1,
+        "min_replicas": 1,
+        "container": {
+            "args": [],
+            "command": [
+                "sh",
+                "-c",
+                "redis-server --requirepass $REDIS_PASSWORD"
+            ],
+            "cpu": 0.5,
+            "image": "docker.io/redis:7-alpine",
+            "memory": "1Gi",
+            "name": "rediscache",
+            "volume_mounts": {
+                "name": "netbox-redis-cache-data",
+                "path": "/data"
+            }
+        },
+        "volume": {
+            "name": "netbox-redis-cache-data",
+            "storage_name": "rediscache",
+            "storage_type": "AzureFile"
+        }
+    }
+}

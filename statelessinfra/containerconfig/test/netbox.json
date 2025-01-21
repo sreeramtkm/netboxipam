@@ -1,0 +1,32 @@
+{
+    "basicproperties": {
+        "container_name": "netbox",
+        "revision_mode": "Single",
+        "workload_profile_name": "Consumption"
+    },
+    "ingress": {
+        "allow_insecure_connections": false,
+        "external_enabled": true,
+        "target_port": 8080,
+        "transport": "auto"
+    },
+    "configtemplate": {
+        "max_replicas": 1,
+        "min_replicas": 1,
+        "container": {
+            "args": [],
+            "command": [],
+            "cpu": 2,
+            "image": "docker.io/netboxcommunity/netbox:v4.0-2.9.1",
+            "memory": "4Gi",
+            "name": "netbox"
+        }
+    },
+    "customdomain":{
+        "hostname": "test",
+        "zonename": "{domainname}",
+        "resourcegroupfordns": "rg-netboxdns-test"
+
+
+    }
+}

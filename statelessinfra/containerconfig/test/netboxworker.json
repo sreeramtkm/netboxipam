@@ -1,0 +1,25 @@
+{
+    "basicproperties": {
+        "container_name": "netbox-worker",
+        "revision_mode": "Single",
+        "workload_profile_name": "Consumption"
+    },
+
+    "configtemplate": {
+        "max_replicas": 1,
+        "min_replicas": 1,
+        "container": {
+            "args": [],
+            "command": [
+                "sh",
+                "-c",
+                "/opt/netbox/venv/bin/python /opt/netbox/netbox/manage.py rqworker"
+            ],
+            "cpu": 0.5,
+            "image": "docker.io/netboxcommunity/netbox:v4.0-2.9.1",
+            "memory": "1Gi",
+            "name": "netbox-worker"
+
+        }
+    }
+}

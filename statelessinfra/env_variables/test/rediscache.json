@@ -1,0 +1,7 @@
+[
+    {
+        "name" : "REDIS_PASSWORD",
+        "secret_name": "rediscachepassword"
+    }
+
+]

@@ -1,0 +1,134 @@
+[
+    {
+        "name" : "SECRET_KEY",
+        "secret_name": "secretkey"
+    },
+    {
+        "name": "CORS_ORIGIN_ALLOW_ALL",
+        "value": "True"
+    },
+    {
+        "name": "DB_HOST",
+        "value": "{FQDN of the database server}"
+    },
+    {
+        "name": "DB_NAME",
+        "value": "netbox"
+    },
+    {
+        "name": "DB_PASSWORD",
+        "secret_name": "dbpassword"
+    },
+    {
+        "name": "DB_USER",
+        "value": "ipam"
+    },
+    {
+        "name": "HOUSEKEEPING_INTERVAL",
+        "value": "86400"
+    },
+    {
+        "name": "MEDIA_ROOT",
+        "value": "/opt/netbox/netbox/media"
+    },
+    {
+        "name": "METRICS_ENABLED",
+        "value": "false"
+    },
+    {
+        "name": "REDIS_CACHE_DATABASE",
+        "value": "1"
+    },
+    {
+        "name": "REDIS_CACHE_HOST",
+        "value": "ca-redis-cache-prod"
+    },
+    {
+        "name": "REDIS_CACHE_INSECURE_SKIP_TLS_VERIFY",
+        "value": "false"
+    },
+    {
+        "name": "REDIS_CACHE_PASSWORD",
+        "secret_name": "rediscachepassword"
+    },
+    {
+        "name": "REDIS_CACHE_SSL",
+        "value": "false"
+    },
+    {
+        "name": "REDIS_DATABASE",
+        "value": "0"
+    },
+    {
+        "name": "REDIS_HOST",
+        "value": "ca-redis-prod"
+    },
+    {
+        "name": "REDIS_INSECURE_SKIP_TLS_VERIFY",
+        "value": "false"
+    },
+    {
+        "name": "REDIS_PASSWORD",
+        "secret_name": "redispassword"
+    },
+    {
+        "name": "REDIS_SSL",
+        "value": "false"
+    },
+    {
+        "name": "RELEASE_CHECK_URL",
+        "value": "https://api.github.com/repos/netbox-community/netbox/releases"
+    },
+    {
+        "name": "SKIP_SUPERUSER",
+        "value": "false"
+    },
+    {
+        "name": "GRAPHQL_ENABLED",
+        "value": "true"
+    },
+    {
+        "name": "WEBHOOKS_ENABLED",
+        "value": "true"
+    },
+    {
+        "name": "EMAIL_FROM",
+        "value": "{emailid}"
+    },
+    {
+        "name": "EMAIL_PASSWORD",
+        "value": "placeholder"
+    },
+    {
+        "name": "EMAIL_PORT",
+        "value": "25"
+    },
+    {
+        "name": "EMAIL_SERVER",
+        "value": "placeholder"
+    },
+    {
+        "name": "EMAIL_SSL_CERTFILE",
+        "value": "placeholder"
+    },
+    {
+        "name": "EMAIL_SSL_KEYFILE",
+        "value": "placeholder"
+    },
+    {
+        "name": "EMAIL_TIMEOUT",
+        "value": "5"
+    },
+    {
+        "name": "EMAIL_USERNAME",
+        "value": "netbox"
+    },
+    {
+        "name": "EMAIL_USE_SSL",
+        "value": "false"
+    },
+    {
+        "name": "EMAIL_USE_TLS",
+        "value": "false"
+    }
+]

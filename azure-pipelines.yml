@@ -1,0 +1,102 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run test, deploys, and mosre:
+# https://aka.ms/yaml
+
+trigger:
+  branches:
+    include:
+      - main
+      - dev*
+
+
+parameters:
+
+- name: TerraformPlan
+  displayName: Run Terraform plan
+  type: boolean
+  default: true
+- name: Environment
+  displayName: The environment where you want to test or deploy the application
+  default: test
+- name: TerraformApply
+  displayName: Run Terraform apply
+  type: boolean
+  default: false
+- name: service
+  displayName: Select stateful/stateless Service 
+  type: string 
+  values:
+  - stateful
+  - stateless
+  default: stateless
+
+variables:
+- name: backendServiceConnection
+  value: 'service_connection'
+- name: backendAzureRmResourceGroupName
+  value: 'rg-terraform-backend'
+- name: backendAzureRmStorageAccountName
+  value: 'terraformbackend'
+- name: backendAzureRmContainerName
+  value: 'netboxipam'
+- name: directory
+  ${{ if eq(parameters.service, 'stateful') }}:
+    value: "statefulinfra"
+  ${{ else }}:
+    value: "statelessinfra"
+
+
+pool:
+  vmImage: 'ubuntu-latest'
+  location: ${variables.location}
+
+
+
+steps:
+- task: TerraformInstaller@1
+  condition: eq('${{ parameters.TerraformPlan }}', true)
+  displayName: 'Install Terraform v1.7.5'
+  inputs:
+    terraformVersion: 1.7.5
+
+  
+
+- task: TerraformTaskV4@4
+  condition: eq('${{ parameters.TerraformPlan }}', true)
+  displayName: "Initialize Terraform"
+  inputs:
+    command: "init"
+    provider: "azurerm"
+    workingDirectory: "$(System.DefaultWorkingDirectory)/${{variables.directory}}"
+    environmentServiceNameAzureRm: ${{variables.backendServiceConnection}}
+    backendServiceArm: ${{variables.backendServiceConnection}}
+    backendAzureRmResourceGroupName: ${{variables.backendAzureRmResourceGroupName}}
+    backendAzureRmStorageAccountName: ${{variables.backendAzureRmStorageAccountName}}
+    backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
+    backendAzureRmKey: "${{ parameters.Environment }}/${{ parameters.service}}/terraform.tfstate"
+  env:
+    ARM_USE_AZUREAD: true
+    TF_LOG: "DEBUG"
+
+- task: TerraformTaskV4@4
+  condition: eq('${{ parameters.TerraformPlan }}', true)
+  name: terraformPlan
+  displayName: "Plan Terraform"
+  inputs:
+    provider: "azurerm"
+    command: plan
+    commandOptions: "-out main.tfplan --var-file=./var/${{ parameters.Environment }}/terraform.tfvars"
+    environmentServiceNameAzureRm: ${{variables.backendServiceConnection}}
+    workingDirectory: "$(System.DefaultWorkingDirectory)/${{variables.directory}}"
+
+- task: TerraformTaskV4@4
+  condition: and (eq(${{ parameters.TerraformPlan }}, true),eq(${{ parameters.TerraformApply }}, true))
+  name: terraformApply
+  displayName: "Apply Terraform"
+  inputs:
+    provider: "azurerm"
+    command: apply
+    commandOptions: "main.tfplan"
+    environmentServiceNameAzureRm: ${{variables.backendServiceConnection}}
+    workingDirectory: "$(System.DefaultWorkingDirectory)/${{variables.directory}}"

@@ -1,0 +1,8 @@
+unique_id            = "netbox"
+purpose              = "stateless"
+location             = "norwayeast"
+dnszonename          = "test.example.com"
+storage_account_name = "ipam"
+subdomain            = "app"
+environment          = "test"
+managedidentitytype  = "UserAssigned"
